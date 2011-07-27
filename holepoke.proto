@@ -1,0 +1,33 @@
+package holepoke;
+
+message HoleID {
+    required string id = 1;
+}
+
+message LocalAddress {
+	optional string address = 1;
+	optional uint32 port = 2;
+}
+
+message HoleAddress {
+    required string address = 1;
+    required uint32 port = 2;
+}
+
+message Request {
+	enum Type { REGISTER = 1; CONNECT = 2; HEARTBEAT = 3; HELLO = 4; }
+	required Type type = 1;
+	
+	optional HoleID hole_id = 2;
+	optional LocalAddress local_address = 3;
+}
+
+message Response {
+	enum Type { REGISTER = 1; CONNECT = 2; HEARTBEAT = 3; HELLO = 4; }
+    required Type type = 1;
+	
+	optional HoleID hole_id = 2;
+	optional HoleAddress hole_address = 3;
+	optional LocalAddress local_address = 4;
+	optional bool successful = 5;
+}

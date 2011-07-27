@@ -1,0 +1,42 @@
+********************
+* holepoke overview
+********************
+Allow a process, potentially behind a firewall, to register itself as a UDP server. Client processes can lookup the server by ID and then connect directly to the server.
+
+server: The process that registers itself with holepoke and receives and ID.
+client: The process that lookups a server address by ID.
+holepoke: The introduction server.
+
+1. Server Registration
+server -> holepoke (assign an ID to my hole)
+server <- holepoke (OK, here's your ID)
+
+2. Through some outside mechanism, server communicates ID to client.
+ALTERNATIVELY:
+Sender could indicate the client it was interested in. The client then checks in and is immediately connected to the server. For sendoid, this would eliminate the out of band e-mail or chat message to communicate the server ID, but would require some configuration to pick who the receiver should be.
+
+3. Client Check-in
+client -> holepoke (where is the hole for this ID?)
+
+4. Server tells peers about each other (either order could occur)
+server <- holepoke (a client at this address wants to connect to you)
+receiver <- holepoke (the hole is at this address and port)
+
+5. Peers attempt to connect to each other.
+
+********************
+* Building on OS X
+********************
+1. sudo port install protobuf-cpp
+2. make
+
+To build in debug mode, run:
+make DEBUGON=1
+
+*********************
+* Building on Windows
+*********************
+1. Download Google Protocol Buffers sources for version 2.4.1
+2. ./configure
+3. make && make install
+4. Build NetworkHelper Visual C++ project
