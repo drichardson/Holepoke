@@ -1,6 +1,6 @@
 package holepoke;
 
-message HoleID {
+message NodeID {
     required string id = 1;
 }
 
@@ -15,19 +15,19 @@ message HoleAddress {
 }
 
 message Request {
-	enum Type { REGISTER = 1; CONNECT = 2; HEARTBEAT = 3; HELLO = 4; }
+	enum Type { REGISTER = 1; HEARTBEAT = 2; HELLO = 3; }
 	required Type type = 1;
 	
-	optional HoleID hole_id = 2;
-	optional LocalAddress local_address = 3;
+	optional NodeID node_id = 2;
+    optional NodeID requested_node_id = 3;
+	optional LocalAddress local_address = 4;
 }
 
 message Response {
-	enum Type { REGISTER = 1; CONNECT = 2; HEARTBEAT = 3; HELLO = 4; }
+	enum Type { WAIT = 1; CONNECT = 2; }
     required Type type = 1;
 	
-	optional HoleID hole_id = 2;
+    optional NodeID requested_hole_id = 2;
 	optional HoleAddress hole_address = 3;
 	optional LocalAddress local_address = 4;
-	optional bool successful = 5;
 }
