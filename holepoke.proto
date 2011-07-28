@@ -19,7 +19,7 @@ message Request {
 	required Type type = 1;
 	
 	optional NodeID node_id = 2;
-    optional NodeID requested_node_id = 3;
+    optional NodeID remote_node_id = 3;
 	optional LocalAddress local_address = 4;
 }
 
@@ -27,7 +27,7 @@ message Response {
 	enum Type { WAIT = 1; CONNECT = 2; }
     required Type type = 1;
 	
-    optional NodeID requested_hole_id = 2;
+    optional NodeID remote_hole_id = 2;
 	optional HoleAddress hole_address = 3;
 	optional LocalAddress local_address = 4;
 }
