@@ -1,8 +1,8 @@
-targets = holepoked peer
+targets = peer #holepoked
 
 # Put holepoke.pb.o first so it gets built before the other objects, which need it's .h file
-holepoked_objs = holepoke.pb.o network.o uuid.o holepoked.o
-peer_objs = holepoke.pb.o endpoint.o sender.o receiver.o network.o fsm.o peer.o
+holepoked_objs = holepoke.pb.o network.o uuid.o node_peer.o #holepoked.o
+peer_objs = holepoke.pb.o endpoint.o network.o fsm.o peer.o #sender.o receiver.o
 
 PROTOC=protoc
 
@@ -36,13 +36,13 @@ LDFLAGS+=-lstdc++ -lpthread -lm -lprotobuf
 CFLAGS+=$(INCLUDES)
 CXXFLAGS=$(CFLAGS)
 
-all: $(targets)
+all: $(holepoked_objs)
 
 %.pb.cc: %.proto
 	$(PROTOC) -I=. --cpp_out=. $<
 
-holepoked: $(holepoked_objs)
-	$(LD) -v -o $@ $(holepoked_objs) $(LDFLAGS)
+#holepoked: $(holepoked_objs)
+#	$(LD) -v -o $@ $(holepoked_objs) $(LDFLAGS)
 
 peer: $(peer_objs)
 	$(LD) -o $@ $(peer_objs) $(LDFLAGS)
