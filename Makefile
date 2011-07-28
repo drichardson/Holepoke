@@ -1,7 +1,7 @@
 targets = peer #holepoked
 
 # Put holepoke.pb.o first so it gets built before the other objects, which need it's .h file
-holepoked_objs = holepoke.pb.o network.o uuid.o node_peer.o #holepoked.o
+holepoked_objs = holepoke.pb.o network.o uuid.o fsm.o endpoint.o node_peer.o #holepoked.o
 peer_objs = holepoke.pb.o endpoint.o network.o fsm.o peer.o #sender.o receiver.o
 
 PROTOC=protoc
