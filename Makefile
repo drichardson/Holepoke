@@ -1,12 +1,10 @@
-targets = peer #holepoked
-
-# Put holepoke.pb.o first so it gets built before the other objects, which need it's .h file
-holepoked_objs = holepoke.pb.o network.o uuid.o fsm.o endpoint.o node_peer.o #holepoked.o
-peer_objs = holepoke.pb.o endpoint.o network.o fsm.o peer.o #sender.o receiver.o
-
+UNAME=$(shell uname)
 PROTOC=protoc
 
-UNAME=$(shell uname)
+TARGETS = holepoke.a
+
+# Put holepoke.pb.o first so it gets built before the other objects, which need it's .h file
+OBJS = holepoke.pb.o fsm.o endpoint.o network.o node_peer.o
 
 ifdef DEBUGON
 CFLAGS=-Wall -Werror -g -O0 -fno-inline -DDEBUGON
@@ -25,7 +23,6 @@ LD=clang++
 endif
 
 ifeq ($(UNAME), Linux)
-LDFLAGS+=-luuid
 CC=gcc
 CXX=g++
 LD=g++
@@ -36,16 +33,13 @@ LDFLAGS+=-lstdc++ -lpthread -lm -lprotobuf
 CFLAGS+=$(INCLUDES)
 CXXFLAGS=$(CFLAGS)
 
-all: $(holepoked_objs)
+all: holepoke.a
 
 %.pb.cc: %.proto
 	$(PROTOC) -I=. --cpp_out=. $<
 
-#holepoked: $(holepoked_objs)
-#	$(LD) -v -o $@ $(holepoked_objs) $(LDFLAGS)
-
-peer: $(peer_objs)
-	$(LD) -o $@ $(peer_objs) $(LDFLAGS)
+holepoke.a: $(OBJS)
+	ar -rcs $@ $^
 
 clean:
-	$(RM) $(targets) $(holepoked_objs) $(peer_objs) holepoke.pb.h
+	$(RM) $(OBJS) $(TARGETS) *.o *.pb.h
