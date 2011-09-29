@@ -1,3 +1,5 @@
 *.o
 *.pb.h
 holepoke.a
+*.swp
+*.un~
