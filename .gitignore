@@ -3,3 +3,6 @@
 holepoke.a
 *.swp
 *.un~
+Makefile
+CMakeFiles
+cmake_install.cmake
