@@ -6,3 +6,5 @@ holepoke.a
 Makefile
 CMakeFiles
 cmake_install.cmake
+*.pb.cc
+*.a
